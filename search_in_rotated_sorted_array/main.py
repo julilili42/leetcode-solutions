@@ -16,7 +16,7 @@ METHOD = "search"
 
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
-        l = 0 
+        l = 0
         r = len(nums) - 1
 
         while l <= r:
@@ -24,29 +24,32 @@ class Solution:
 
             if nums[m] == target:
                 return m
-
-            # left side is sorted
-            if nums[l] <= nums[m]:
-                if target < nums[m] and target >= nums[l]:
-                # normal binary search on nums[l:m]
+            
+            # check if left side is sorted
+            if nums[m] >= nums[l]:
+                # check if target sits in range(nums[l], nums[m])
+                if nums[m] > target and target >= nums[l]:
                     r = m - 1
                 else:
-                    l = m + 1
-            # right side is sorted
-            else:
-                if target > nums[m] and target <= nums[r]:
+                    l = m + 1                    
+
+
+            # check if right side is sorted
+            if nums[m] <= nums[r]:
+                # check if target sits in range(nums[m], nums[r])
+                if nums[m] < target and target <= nums[r]:
                     l = m + 1
                 else:
-                    r = m - 1 
-        
-        return -1
+                    r = m - 1
 
+        return -1
 
 TESTS = [
     (([4,5,6,7,0,1,2], 0,), 4),
     (([4,5,6,7,0,1,2], 3,), -1),
     (([5,6,1,2,3,4], 6,), 1),
     (([5,6,7,1,2,3,4], 2,), 4),
+    (([3,5,1], 3,), 0)
 ]
 
 

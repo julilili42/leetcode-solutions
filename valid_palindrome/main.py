@@ -15,6 +15,15 @@ METHOD = "isPalindrome"
 
 
 class Solution:
+    def isPalindrome(self, s: str) -> bool:
+        new = ""
+
+        for ch in s:
+            if ch.isalnum():
+                new += ch.lower()
+
+        return new == new[::-1]
+
     def isPalindromeBruteForce(self, s: str) -> bool:
         from string import ascii_letters, digits
         s = "".join(ch.lower() for ch in s if ch in (ascii_letters + digits))
@@ -36,7 +45,7 @@ class Solution:
 
         return True
 
-    def isPalindrome(self, s: str) -> bool:
+    def isPalindromeRegex(self, s: str) -> bool:
         import re
         s = re.sub("[^a-zA-Z0-9]", "", s).lower()
         
@@ -51,6 +60,23 @@ class Solution:
                 return False
 
         return True
+
+    def isPalindromeNoRegex(self, s: str) -> bool:
+        s = "".join(char for char in s if char.isalnum()).lower()
+
+        print(s)
+        l = 0
+        r = len(s) - 1
+
+        while l <= r:
+            if s[l] != s[r]:
+                return False
+            l += 1
+            r -= 1
+            
+        return True
+
+
 
 TESTS = [
     (("A man, a plan, a canal: Panama",), True),

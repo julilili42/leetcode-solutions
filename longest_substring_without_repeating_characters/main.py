@@ -15,8 +15,35 @@ METHOD = "lengthOfLongestSubstring"
 
 
 class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
+    def lengthOfLongestSubstringBruteForce(self, s: str) -> int:
+        max_length = 0
 
+        for i in range(len(s)):
+            chars = set()
+            for j in range(i, len(s)):
+                if s[j] in chars:
+                    break
+                else:
+                    chars.add(s[j])
+                    max_length = max(max_length, len(chars))
+
+        return max_length
+
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        l = 0 
+        max_length = 0
+        seen = set()
+        
+        for r in range(len(s)):
+            while s[r] in seen:
+                seen.remove(s[l])
+                l += 1
+
+            seen.add(s[r])
+            max_length = max(max_length, r - l + 1)
+
+        return max_length
 
 
 TESTS = [

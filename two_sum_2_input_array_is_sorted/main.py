@@ -11,41 +11,43 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "solve"
+METHOD = "twoSumDictionary"
 
 
 class Solution:
-    def __init__(self):
-        # first index => value
-        # second index => current min_value
-        self.stack = []        
+    def twoSumTwoPointer(self, numbers: List[int], target: int) -> List[int]:
+        l = 0
+        r = len(numbers) - 1
 
-    def push(self, value: int) -> None:
-        if len(self.stack) == 0:
-            self.stack.append((value, value))
-            return
+        while l <= r:
+            total = numbers[l] + numbers[r]
+            if total == target:
+                return [l + 1, r + 1]
+            elif total > target:
+                r -= 1
+            else:
+                l += 1
         
-        min_value = self.getMin()
-
-        if value < min_value:
-            self.stack.append((value, value))
-        else:
-            self.stack.append((value, min_value))
-
-    def pop(self) -> None:
-        self.stack.pop()
-
-    def top(self) -> int:
-        value, _ = self.stack[-1]
-        return value 
-
-    def getMin(self) -> int:
-        _, min_value = self.stack[-1]
-        return min_value
+        return [-1, -1]
+    
+    
+    def twoSumDictionary(self, numbers: List[int], target: int) -> List[int]:
+        d = defaultdict(int)
+        
+        for i in range(len(numbers)):
+            current = numbers[i]
+            if target - current in d:
+                return [d[target - current] + 1, i + 1]
+            d[current] = i
 
 
 
-TESTS = []
+
+TESTS = [
+    (([2,7,11,15], 9,), [1,2]),
+    (([2,3,4], 6,), [1,3]),
+    (([-1,0], -1,), [1,2]),
+]
 
 
 def run_tests():
