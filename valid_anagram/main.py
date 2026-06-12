@@ -19,6 +19,8 @@ class Solution:
         return Counter(s) == Counter(t)
 
     def isAnagram(self, s: str, t: str) -> bool:
+        # is needed since zip(s,t) number of iterations = min(len(s), len(t))
+        # this would accept f.ex. s = "a" and t = "ab"
         if len(s) != len(t):
             return False
         
@@ -33,6 +35,25 @@ class Solution:
                 return False
         
         return True
+    
+    # same logic using array instead of dictionary
+    def isAnagramAlphabet(self, s: str, t: str) -> bool:
+        if len(s) != len(t):
+            return False
+        
+        alphabet = [0] * 26
+
+        for s_char, t_char in zip(s,t):
+            alphabet[ord(s_char) - ord("a")] += 1
+            alphabet[ord(t_char) - ord("a")] -= 1
+
+
+        for freq in alphabet:
+            if freq != 0:
+                return False
+        
+        return True
+
 
 
 TESTS = [

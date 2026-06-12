@@ -20,28 +20,26 @@ class Solution:
         r = len(nums) - 1
 
         while l <= r:
-            m = (l + r) // 2
+            m = l + (r - l) // 2
 
             if nums[m] == target:
                 return m
-            
-            # check if left side is sorted
+            # left side is sorted
+            # need to allow equality since it is possible that: l = m
             if nums[m] >= nums[l]:
-                # check if target sits in range(nums[l], nums[m])
-                if nums[m] > target and target >= nums[l]:
+                # check if target in [nums[l], nums[m])
+                if target >= nums[l] and target < nums[m]:
                     r = m - 1
                 else:
-                    l = m + 1                    
-
-
-            # check if right side is sorted
-            if nums[m] <= nums[r]:
-                # check if target sits in range(nums[m], nums[r])
-                if nums[m] < target and target <= nums[r]:
+                    l = m + 1
+            # right side is sorted
+            elif nums[m] < nums[r]:
+                # check if target in (nums[m], nums[r]]
+                if target <= nums[r] and target > nums[m]:
                     l = m + 1
                 else:
-                    r = m - 1
-
+                    r = m - 1 
+        
         return -1
 
 TESTS = [

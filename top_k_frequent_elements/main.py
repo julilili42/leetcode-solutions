@@ -22,21 +22,28 @@ class Solution:
     
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         counter = Counter(nums)
-        n = len(nums)
 
-        buckets = [[] for _ in range(n + 1)]
+        # we need len(nums) + 1 buckets, since f.ex. [1,1,1,2,2,3] could have
+        # frequencies ranging from 0, ..., 5, 6. This gives us a frequency 
+        # array with 7 buckets
+        buckets = [[] for _ in range(len(nums) + 1)]
 
         for value, freq in counter.items():
             buckets[freq].append(value)
         
-        result = []
+        # since we have 7 buckets (0, ..., 5, 6) we need to start with
+        # len(buckets) - 1 and iterate until 0. 
+        # Reverse iteration range(len(buckets) - 1, -1, -1): 
+        # [len(buckets) - 1, -1) => [6...0]
+        # Normal iteration range(len(buckets)): 
+        # [0, len(buckets) + 1) => [0 ...6] 
+        res = []
         for i in range(len(buckets) - 1, -1, -1):
             bucket = buckets[i]
-            for value in bucket:
-                if len(result) < k: 
-                    result.append(value)
+            if len(res) < k:
+                res.extend(bucket)
         
-        return result
+        return res
             
 
 TESTS = [

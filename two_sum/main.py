@@ -23,15 +23,26 @@ class Solution:
 
 
     def twoSum(self, nums: List[int], target: int) -> List[int]:
-        sum = {}
+        summation = {}
 
-        for index, num in enumerate(nums):
-            sum[target - num] = index
+        for i in range(len(nums)):
+            number = nums[i]
+            summation[target - number] = i
         
-        for index, num in enumerate(nums):
-            found_index = sum.get(num, -1)
-            if found_index != -1 and found_index != index:
-                return [index, found_index]
+
+        for i in range(len(nums)):
+            found_index = summation.get(nums[i], -1)
+            # we have to make sure to not pick the same index twice. 
+            # This can happen since we iterate through the array and might 
+            # reference to the same number which we currently on.
+            # F.ex.: [3,2,4] target: 6
+            # summation = {3: 0, 4: 1, 2: 2}
+            # Starting the loop at nums[0] = 3 gives us 0 => [0,0] is returned 
+            # which is not allowed
+            if found_index != -1 and found_index != i:
+                return [i, found_index]
+
+        return [-1,-1]
 
 
 

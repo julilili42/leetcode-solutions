@@ -16,38 +16,42 @@ METHOD = "threeSum"
 
 class Solution:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
-        nums.sort()
-        res = []
+        nums = sorted(nums)
+        result = []
+        # Since we have three pointers and j < l < r must be statisfied, 
+        # we only iterate to index j < len(nums) - 2. 
+        for j in range(len(nums) - 2):
+            l = j + 1
+            r = len(nums) - 1 
 
-        for i in range(len(nums) - 2):
-            if i > 0 and nums[i] == nums[i - 1]:
+            # Since nums is sorted and j is fixed and j < l < r,
+            # we can skip a nums[j] if we already checked it.
+            if j > 0 and nums[j] == nums[j - 1]:
                 continue
 
-            l = i + 1
-            r = len(nums) - 1
-
-            
             while l < r:
-                total = nums[i] + nums[l] + nums[r]  
-                
+                total = nums[j] + nums[l] + nums[r]
                 if total == 0:
-                    res.append([nums[i],nums[l],nums[r]])
+                    result.append([nums[j], nums[l], nums[r]])
                     l += 1
                     r -= 1
+
+                    # Similar logic as before, we can skip values which we already
+                    # checked. 
+                    # Since we move l and r inside, we have to make sure that 
+                    # l < r is still correct. 
                     while l < r and nums[l] == nums[l - 1]:
                         l += 1
-
                     while l < r and nums[r] == nums[r + 1]:
-                        r -= 1
+                        r -= 1 
 
                 elif total < 0:
                     l += 1
                 else:
                     r -= 1
 
-        return res
-
-        
+        return result
+                
 
 
 

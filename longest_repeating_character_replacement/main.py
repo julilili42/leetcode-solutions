@@ -11,42 +11,16 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "solve"
+METHOD = "characterReplacement"
 
 
 class Solution:
-    def __init__(self):
-        # first index => value
-        # second index => current min_value
-        self.stack = []        
+    def characterReplacement(self, s: str, k: int) -> int:
 
-    def push(self, value: int) -> None:
-        if len(self.stack) == 0:
-            # we have to return after appending
-            self.stack.append((value, value))
-            return
-        
-        min_value = self.getMin()
-
-        if value < min_value:
-            self.stack.append((value, value))
-        else:
-            self.stack.append((value, min_value))
-
-    def pop(self) -> None:
-        self.stack.pop()
-
-    def top(self) -> int:
-        value, _ = self.stack[-1]
-        return value 
-
-    def getMin(self) -> int:
-        _, min_value = self.stack[-1]
-        return min_value
-
-
-
-TESTS = []
+TESTS = [
+    (("ABAB",2,), 4),
+    (("AABABBA",1,), 4),
+]
 
 
 def run_tests():
