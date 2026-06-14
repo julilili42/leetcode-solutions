@@ -15,6 +15,30 @@ METHOD = "longestConsecutive"
 
 
 class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        # sets have O(1) read/write.
+        # duplicates can be ignored since they do not add the length of 
+        # consecutive elements.
+        nums = set(nums)
+        max_length = 0
+        # if nums is empty we skip the for-loop and return 0.
+        for num in nums:
+            # longest consecutive sequence starts with element which does not 
+            # have a predecessor. We need to check those sequences where the
+            # predecessor is missing. 
+            if (num - 1) not in nums:
+                start = num + 1
+                # since we entered the for loop the length is atleast one. 
+                length = 1
+                # check and keep track of consecutive elements. 
+                while start in nums:
+                    start += 1 
+                    length += 1
+                max_length = max(max_length, length)
+
+        return max_length
+
+    
     def longestConsecutiveBruteForce(self, nums: List[int]) -> int:
         sorted_nums = sorted(nums) 
         
@@ -39,24 +63,7 @@ class Solution:
         return longest_seq
 
 
-    def longestConsecutive(self, nums: List[int]) -> int:
-        num_set = set(nums)
-        max_length = 0
-
-        for num in num_set:
-            # start counting at the beginning of a sequence
-            if (num - 1) not in num_set:
-                length = 1
-                start = num + 1
-
-                while start in num_set:
-                    length += 1
-                    start += 1
-                
-                max_length = max(max_length, length)
-
-        return max_length
-
+    
 
 TESTS = [
     (([100,4,200,1,3,2],), 4),

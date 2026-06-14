@@ -37,6 +37,34 @@ class Solution:
 
         return len(stack) == 0
 
+
+    def isValidFor(self, s: str) -> bool:
+        valid = {"(": ")", "{": "}", "[": "]"}
+        stack = []
+
+        for c in s:
+            if len(stack) == 0:
+                stack.append(c)
+                continue
+            else:
+                # we pop the previous element from the stack ...
+                prev = stack.pop()
+                # ... and try to get the closing bracket ...
+                valid_prev = valid.get(prev, "")
+
+                # ... if the closing bracket is the current char ...
+                if valid_prev != "" and valid_prev == c:
+                # ... then we skip. We poped the previous element and
+                # we did not add another element to the stack ...
+                    continue
+                else:
+                # ... if they don't match then we append both previous and
+                # current char to the stack.
+                    stack.append(prev)
+                    stack.append(c)
+
+        return len(stack) == 0
+
 TESTS = [
     (("()",), True),
     (("()[]{}",), True),

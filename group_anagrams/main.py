@@ -15,17 +15,34 @@ METHOD = "groupAnagrams"
 
 
 class Solution:
+    # instead of using a string fingerprint we could also use a tuple as fingerprint. This makes the fingerprint calculation
+    # much easier. 
+    # Since tuples are immutable, they are hashable and we can use them as keys for our buckets
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         map = defaultdict(list)
 
         for s in strs:
-            str_sorted = "".join(sorted(s))
-            map[str_sorted].append(s)
-        
+            count = [0] * 26
+            for c in s:
+                count[ord(c) - ord("a")] += 1
+                
+            map[tuple(count)].append(s)
+
         return list(map.values())
 
 
-    def computeFingerprint(self, s: str) -> List[List[str]]:
+    def groupAnagramsSorting(self, strs: List[str]) -> List[List[str]]:
+        groups = defaultdict(list)
+        for s in strs:
+            # sorted anagrams are equal to each other
+            # sort string and use it as key for the groups
+            s_sorted = "".join(sorted(s))
+            groups[s_sorted].append(s)
+
+        return list(groups.values())
+
+    
+    def computeFingerprintString(self, s: str) -> List[List[str]]:
         count = [0] * 26
         
         # calculate frequency of each character in string
@@ -41,29 +58,17 @@ class Solution:
         # we will use this string as the fingerprint of an bucket later 
         return "".join(res)
 
+
     def groupAnagramsFingerprint(self, strs: List[str]) -> List[List[str]]:
-        map = defaultdict(list)
+        groups = defaultdict(list)
         
         for s in strs:
-            map[self.computeFingerprint(s)].append(s)
+            groups[self.computeFingerprintString(s)].append(s)
 
         return list(map.values())
     
 
-    # instead of using a string fingerprint we could also use a tuple as fingerprint. This makes the fingerprint calculation
-    # much easier. 
-    # Since tuples are immutable, they are hashable and we can use them as keys for our buckets
-    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
-        map = defaultdict(list)
-
-        for s in strs:
-            count = [0] * 26
-            for c in s:
-                count[ord(c) - ord("a")] += 1
-                
-            map[tuple(count)].append(s)
-
-        return list(map.values())
+    
 
 TESTS = [
     ((["eat","tea","tan","ate","nat","bat"],), [['eat', 'tea', 'ate'], ['tan', 'nat'], ['bat']]),

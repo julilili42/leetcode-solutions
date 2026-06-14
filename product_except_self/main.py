@@ -11,42 +11,29 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "productExceptSelfNoDivision"
+METHOD = "productExceptSelf"
 
 
 class Solution:
+    # O(n) Runtime, O(1) Space
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        result = [1] * len(nums)
-        for i in range(len(nums)):
-            product = 1
-            for j in range(len(nums)):
-                if i == j:
-                    continue
-                else:
-                    product *= nums[j]
-            result[i] = product 
+        n = len(nums)
+        result = [1] * n
+
+        prefix = 1
+        for i in range(n):
+            result[i] = prefix
+            prefix *= nums[i]
+        
+        suffix = 1
+        for i in range(n - 1, -1, -1):
+            result[i] *= suffix
+            suffix *= nums[i]
+            
         return result
     
-    def productExceptSelfFast(self, nums: List[int]) -> List[int]:
-        product = 1
-        zero_counter = 0
-       
-        for i in range(len(nums)):
-            if num[i] == 0:
-                zero_counter += 1
-            else:
-                product *= num[i]
-
-        result = [0] * len(nums)
-        for i in range(len(nums)):
-            if zero_counter == 0:
-                result[i] = int(product / nums[i])
-            elif zero_counter == 1 and nums[i] == 0:
-                result[i] = product
-        
-        return result
-
-    def productExceptSelfNoDivision(self, nums:List[int]) -> List[int]:
+    # O(n) Runtime, O(n) Space
+    def productExceptSelfSuffixPrefix(self, nums:List[int]) -> List[int]:
         n = len(nums)
 
         prefix = [1] * n
@@ -62,6 +49,46 @@ class Solution:
             result[i] = prefix[i] * suffix[i]
 
         return result
+
+    # O(n) Runtime, O(n) Space
+    def productExceptSelfZeroCount(self, nums: List[int]) -> List[int]:
+        product = 1
+        # since num_zeros = 1 and >= 2 are special cases we
+        # need to keep track of the number of zeros.
+        num_zeros = 0 
+        for num in nums:
+            if num == 0:
+                num_zeros += 1
+            else:
+                product *= num
+        # initialization of result array with zeros. This makes it easier for the 
+        # case num_zeros = 1 and >= 2. 
+        result = [0] * len(nums)
+        for i in range(len(nums)): 
+            # general case
+            if num_zeros == 0:
+                result[i] = int(product / nums[i])
+            # special case num_zeros = 1
+            elif num_zeros == 1 and nums[i] == 0:
+                result[i] = product
+            # special case num_zeros >= 2
+        
+        return result
+
+    # O(n^2) Runtime
+    def productExceptSelfBruteForce(self, nums: List[int]) -> List[int]:
+        result = [1] * len(nums)
+        for i in range(len(nums)):
+            product = 1
+            for j in range(len(nums)):
+                if i == j:
+                    continue
+                else:
+                    product *= nums[j]
+            result[i] = product 
+        return result
+    
+
 
 TESTS = [
     (([1,2,4,6],), [48,24,12,8]),
