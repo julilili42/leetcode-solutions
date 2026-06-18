@@ -11,11 +11,12 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "twoSumDictionary"
+METHOD = "twoSum"
 
 
 class Solution:
-    def twoSumTwoPointer(self, numbers: List[int], target: int) -> List[int]:
+    # Time O(n), Space O(1)
+    def twoSumTwo(self, numbers: List[int], target: int) -> List[int]:
         l = 0
         r = len(numbers) - 1
 
@@ -30,15 +31,18 @@ class Solution:
         
         return [-1, -1]
     
-    
+    # Time O(n), Space O(n)
     def twoSumDictionary(self, numbers: List[int], target: int) -> List[int]:
-        d = defaultdict(int)
-        
-        for i in range(len(numbers)):
-            current = numbers[i]
-            if target - current in d:
-                return [d[target - current] + 1, i + 1]
-            d[current] = i
+        freq = {}
+
+        for i, current in enumerate(numbers):
+            found_index = freq.get(current, -1)
+            # we dont need to check found_index != i since found_index < i
+            if found_index != -1:
+                return [found_index + 1, i + 1]
+            freq[target - current] = i
+
+        return [-1, -1]
 
 
 

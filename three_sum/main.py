@@ -23,6 +23,15 @@ class Solution:
         for j in range(len(nums) - 2):
             l = j + 1
             r = len(nums) - 1 
+            
+            # Since the nums is sorted we know that
+            # nums[j] < nums[l] < nums[r]
+            # if nums[j] > 0 we get
+            # 0 < nums[l] < nums[l] 
+            # therefore total > 0 and we break 
+            if nums[j] > 0:
+                break
+
 
             # Since nums is sorted and j is fixed and j < l < r,
             # we can skip a nums[j] if we already checked it.

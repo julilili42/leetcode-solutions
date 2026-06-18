@@ -15,6 +15,8 @@ METHOD = "longestConsecutive"
 
 
 class Solution:
+    # O(n) since the sequence starts with the smallest element. Each element is iterated through only once
+    # as a successor.
     def longestConsecutive(self, nums: List[int]) -> int:
         # sets have O(1) read/write.
         # duplicates can be ignored since they do not add the length of 
@@ -34,6 +36,8 @@ class Solution:
                 while start in nums:
                     start += 1 
                     length += 1
+                # update max_length only if we found the start of a new sequence.
+                # Unecessary to update for each character since >1 possible only if no predecessor. 
                 max_length = max(max_length, length)
 
         return max_length

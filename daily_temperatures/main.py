@@ -11,36 +11,27 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "searchInsert"
+METHOD = "solve"
 
 
 class Solution:
-    def searchInsert(self, nums: List[int], target: int) -> int:
-        l = 0
-        r = len(nums) - 1
+    def solve(self, *args):
+        """
+        Replace this with the actual LeetCode function.
 
-        while l <= r:
-            m = (l + r) // 2
-
-            if nums[m] == target:
-                return m
-            elif nums[m] < target:
-                l = m + 1
-            else: 
-                r = m - 1
-        # we know that i < l is smaller then target
-        # and i > r is greater then target.
-        # if target is not in nums, then the while loop ends in l > r => l = r + 1 
-        return l 
-
-
+        Example:
+        def twoSum(self, nums: List[int], target: int) -> List[int]:
+            ...
+        """
+        pass
 
 
 TESTS = [
-    (([1,3,5,6], 5), 2),
-    (([1,3,5,6], 2), 1),
-    (([1,3,5,6], 7), 4),
-    (([1,3,5,6], 0), 0),
+    # Format:
+    # ((arg1, arg2, ...), expected),
+
+    # Example:
+    # (([2, 7, 11, 15], 9), [0, 1]),
 ]
 
 
