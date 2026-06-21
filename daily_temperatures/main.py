@@ -11,27 +11,33 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "solve"
+METHOD = "dailyTemperatures"
 
 
 class Solution:
-    def solve(self, *args):
-        """
-        Replace this with the actual LeetCode function.
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        stack = []
+        res = [0] * len(temperatures)
+        for i, temp in enumerate(temperatures):
+            # stack contains index of previous temperatures
+            while stack and temperatures[stack[-1]] < temp:
+                prev_index = stack.pop()
+                # calculate distance to next highest temperature 
+                res[prev_index] = i - prev_index
+            
+            stack.append(i)
+            
+        return res
+               
 
-        Example:
-        def twoSum(self, nums: List[int], target: int) -> List[int]:
-            ...
-        """
-        pass
+
+
 
 
 TESTS = [
-    # Format:
-    # ((arg1, arg2, ...), expected),
-
-    # Example:
-    # (([2, 7, 11, 15], 9), [0, 1]),
+    (([73,74,75,71,69,72,76,73],), [1,1,4,2,1,1,0,0]),
+    (([30,40,50,60],), [1,1,1,0]),
+    (([30,60,90],), [1,1,0]),
 ]
 
 

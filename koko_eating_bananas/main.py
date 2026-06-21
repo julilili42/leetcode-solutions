@@ -34,11 +34,12 @@ class Solution:
             # if speed is feasible => check if lower speed is feasible.
             if feasible(m):
                 # r holds feasible upper bound 
+                # we don't know if we will find a slower feasible speed
                 r = m
             # else speed is to low => increase speed
             else:
                 l = m + 1
-
+        # does not matter if l or r since the while loop ends with l == r
         return l
 
 

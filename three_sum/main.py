@@ -51,6 +51,7 @@ class Solution:
                     # l < r is still correct. 
                     while l < r and nums[l] == nums[l - 1]:
                         l += 1
+                    # nums[r + 1] is no problem since r -= 1 beforehand
                     while l < r and nums[r] == nums[r + 1]:
                         r -= 1 
 
