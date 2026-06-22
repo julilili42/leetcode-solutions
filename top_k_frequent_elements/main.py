@@ -38,12 +38,19 @@ class Solution:
         # Normal iteration range(len(buckets)): 
         # [0, len(buckets) + 1) => [0 ...6] 
         res = []
-        for i in range(len(buckets) - 1, -1, -1):
-            bucket = buckets[i]
+        for i in range(len(buckets) - 1, -1, -1): 
+            # this could return a res with len(res) > k since we add bucket
+            # without knowing how many elements are in bucket
+            """bucket = buckets[i]
             if len(res) < k:
                 res.extend(bucket)
-        
-        return res
+            """
+            # to make sure len(res) is equal to k
+            for val in buckets[i]:
+                res.append(val)
+
+                if len(res) == k:
+                    return res
             
 
 TESTS = [

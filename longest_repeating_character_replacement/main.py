@@ -19,6 +19,11 @@ class Solution:
         l = 0
         freq = defaultdict(int)
         max_length = 1
+        # max_freq is not always the exact max_frequency in the current window.
+        # it is the highest freq we have seen while expanding the window. 
+        # that is sufficient since we only care about the max_length, 
+        # not if the current window is valid. 
+        # alternatively: use max_freq = max(freq.values())
         max_freq = 0
 
         for r in range(len(s)):
