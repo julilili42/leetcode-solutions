@@ -34,7 +34,8 @@ class Solution:
         l = 0
         r = len(nums) - 1
         min_element = float("inf")
-
+        
+        # needs to be equal since we need to support cases where l = r f.ex.: [1]
         while l <= r:
             m = l + (r - l) // 2
             

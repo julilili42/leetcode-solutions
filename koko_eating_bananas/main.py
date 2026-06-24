@@ -29,17 +29,17 @@ class Solution:
         l = 1
         # upper speed bound: Max of piles
         r = max(piles)
-        while l < r:
+        while l <= r:
             m = l + (r - l) // 2
             # if speed is feasible => check if lower speed is feasible.
             if feasible(m):
-                # r holds feasible upper bound 
-                # we don't know if we will find a slower feasible speed
-                r = m
+                r = m - 1
             # else speed is to low => increase speed
             else:
                 l = m + 1
-        # does not matter if l or r since the while loop ends with l == r
+        # if feasible(m') == True butfeasible(m'-1) == False, in the last iteration of this loop we increment
+        # l = m + 1 which gives us our original l = m'.
+        # Therefore l > r and we have to return l.
         return l
 
 
