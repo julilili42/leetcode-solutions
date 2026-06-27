@@ -33,7 +33,7 @@ class Solution:
                 else:
                     l = m + 1
             # right side is sorted
-            elif nums[m] < nums[r]:
+            else:
                 # check if target in (nums[m], nums[r]]
                 if target <= nums[r] and target > nums[m]:
                     l = m + 1

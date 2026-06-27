@@ -15,16 +15,17 @@ METHOD = "checkInclusion"
 
 
 class Solution:
-    def calculate_fingerprint(self, s) -> list[int]:
-        freq = [0] * 26
-        for ch in s:
-            freq[ord(ch) - ord("a")] += 1
-
-        return freq
 
     # Runtime O(n*m) where n = len(s1) and m = len(s2)
     def checkInclusionBruteForce(self, s1: str, s2: str) -> bool:
-        freq_s1 = self.calculate_fingerprint(s1)
+        def calculate_fingerprint(s) -> list[int]:
+            freq = [0] * 26
+            for ch in s:
+                freq[ord(ch) - ord("a")] += 1
+
+            return freq
+
+        freq_s1 = calculate_fingerprint(s1)
 
         l = 0
 
@@ -45,26 +46,32 @@ class Solution:
 
     
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        freq_s1 = self.calculate_fingerprint(s1)
+        def calculate_fingerprint(s) -> list[int]:
+            freq = [0] * 26
+            for ch in s:
+                freq[ord(ch) - ord("a")] += 1
 
+            return freq
+    
+        s1_fp = calculate_fingerprint(s1)
+        window_fp = [0] * 26
         l = 0
     
-        freq_window = [0] * 26
         for r in range(len(s2)):    
             # check if current window is larger then s1
             if (r - l + 1) > len(s1):
                 # decrease counter of first character in window
-                freq_window[ord(s2[l]) - ord("a")] -= 1   
+                window_fp[ord(s2[l]) - ord("a")] -= 1   
                 # and decrease window size 
                 l += 1
             
             # increase counter of new character 
-            freq_window[ord(s2[r]) - ord("a")] += 1
+            window_fp[ord(s2[r]) - ord("a")] += 1
             
 
             # if both fingerprints match it implies that s2 has a substring with the same amount of characters 
             # therefore s1 is a permutation of the current substring of s2
-            if freq_window == freq_s1:
+            if window_fp == s1_fp:
                 return True
         
         return False

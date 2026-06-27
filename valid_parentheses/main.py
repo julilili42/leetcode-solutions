@@ -15,9 +15,28 @@ METHOD = "isValid"
 
 
 class Solution:
-    brackets = {"(":")", "{": "}", "[": "]"}
-
     def isValid(self, s: str) -> bool:
+        brackets = {"(":")", "{":"}", "[":"]"}
+        stack = []
+
+        for ch in s:
+            if ch in brackets:
+                stack.append(ch)
+            else:
+                # closing bracket without any opening, must be False
+                if not stack:
+                    return False
+                
+                opening = stack.pop()
+                # opening bracket (left) does not match closing bracket (right)
+                if brackets[opening] != ch:
+                    return False
+        
+        return len(stack) == 0 
+
+
+    def isValidWhile(self, s: str) -> bool:
+        brackets = {"(":")", "{": "}", "[": "]"}
         stack = []
         p = 0
         while p < len(s):
