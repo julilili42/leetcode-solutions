@@ -17,21 +17,22 @@ import sys
 METHOD = "findKthLargestMinHeap"
 
 
+# heap is not completely sorted
+# in Python: Min-heap is standard
+# Min-heap: Binary Tree with constraint:
+# each parent is smaller or equal to its children.
+#
+# For example: [2, 5, 3, 9, 8, 7]
+#
+#        2
+#      /   \
+#     5     3
+#    / \   /
+#   9   8 7
+#
+# Therfore smallest element is always heap[0]
+
 class Solution:
-    # Time: O(n + k * log(n))
-    # Space: O(n)
-    def findKthLargestMaxHeap(self, nums: List[int], k: int) -> int:
-        # O(n)
-        heap = [-n for n in nums]
-        heapify(heap)
-        
-        # O(k)
-        for i in range(k):
-            # O(log(n))
-            current = heappop(heap)
-            if i == k - 1:
-                return -current
-        
     # Time: O(n*log(k))
     # Space: O(k)
     def findKthLargestMinHeap(self, nums: List[int], k: int) -> int:
@@ -48,9 +49,21 @@ class Solution:
 
         # return smallest element of heap with size k => k-th largest element
         return heap[0]
-
     
-
+    # Time: O(n + k * log(n))
+    # Space: O(n)
+    def findKthLargestMaxHeap(self, nums: List[int], k: int) -> int:
+        # O(n)
+        heap = [-n for n in nums]
+        heapify(heap)
+        
+        # O(k)
+        for i in range(k):
+            # O(log(n))
+            current = heappop(heap)
+            if i == k - 1:
+                return -current
+        
     # Linear Operation O(r - l + 1)
     def partition(self, nums: List[int], l: int, r: int) -> int:
         # choose random pivot

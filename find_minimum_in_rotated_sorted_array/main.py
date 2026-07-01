@@ -19,12 +19,14 @@ class Solution:
         l = 0
         r = len(nums) - 1
 
-        while l <= r:
+        while l < r:
             m = l + (r - l) // 2
-
+            
+            # since nums[m] > nums[r] we know that the min_element must be > m
             if nums[m] > nums[r]:
                 l = m + 1
             else:
+                # min could be m or smaller then m
                 r = m
 
         return nums[l]

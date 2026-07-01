@@ -31,7 +31,7 @@ class Solution:
         
 
         for i in range(len(nums)):
-            found_index = summation.get(nums[i], -1)
+            found_index = summation.get(nums[i], None)
             # we have to make sure to not pick the same index twice. 
             # This can happen since we iterate through the array and might 
             # reference to the same number which we currently on.
@@ -39,7 +39,7 @@ class Solution:
             # summation = {3: 0, 4: 1, 2: 2}
             # Starting the loop at nums[0] = 3 gives us 0 => [0,0] is returned 
             # which is not allowed
-            if found_index != -1 and found_index != i:
+            if found_index is not None and found_index != i:
                 return [i, found_index]
 
         return [-1,-1]
