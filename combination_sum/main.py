@@ -11,39 +11,42 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "generateParenthesis"
+METHOD = "combinationSum"
 
 
 class Solution:
-    # Time O(R * n) where R is number of valid combinations
-    # per valid solution we need 2n recursion levels where each recursion is O(1)
-    # Therefore O(R * n)
-    # Space O(R * n)
-    def generateParenthesis(self, n: int) -> List[str]:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         res = []
-
-        # add ")" only after valid "("
-        def dfs(s: str, left: int, right: int):
-            # if we have n opening and n closing parenthesis we are done
-            if left == n and right == n:
-                res.append(s)
+        subset = []
+        def dfs(s: int, i: int):
+            # is s a solution? 
+            if s == target:
+                res.append(subset.copy())
+                return
+            # is the path invalid? 
+            elif s > target:
+                return
+            # no more solutions? 
+            elif i >= len(candidates):
                 return
 
-            if left < n:
-                dfs(s + "(", left + 1, right)
 
-            # right has to be smaller then left, else we enter a invalid branch
-            if right < left:
-                dfs(s + ")", left, right + 1)
+            # take candidate
+            subset.append(candidates[i])
+            dfs(s + candidates[i], i)
 
-        dfs("", 0, 0)
+            # skip candidate
+            subset.pop()
+            dfs(s, i + 1)
 
+        dfs(0, 0)
         return res
 
 
 TESTS = [
-    ((3,), ["((()))", "(()())", "(())()", "()(())", "()()()"]),
-    ((1,), ["()"]),
+    (([2,3,6,7], 7,), [[2,2,3],[7]]),
+    (([2,3,5], 8), [[2,2,2,2],[2,3,3],[3,5]]),
+    (([2], 1), []),
 ]
 
 

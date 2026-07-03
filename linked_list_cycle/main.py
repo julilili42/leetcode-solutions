@@ -15,14 +15,24 @@ METHOD = "hasCycle"
 
 
 class Solution:
+    # Time: O(n) 
+    # Worstcase cycle with n nodes => in n steps: d mod cycle_length == 0
+    # Space: O(1)
     def hasCycle(self, head: Optional[ListNode]) -> bool:
         slow = head
         fast = head
-
+        
+        # we could also check fast.next.next but this would be caught in the next iterration
+        # relative distance between both pointers in cycle increases by one each iteration
+        # fast: +2 -> +2 -> +2 -> ...
+        # slow: +1 -> +1 -> +1 -> ...
+        # relative: +1 -> +1 -> +1 -> ...
+        # if we are in a cycle relative distance d mod cycle_length
+        # and since d incereases by 1 it is guranteed that slow == fast at some point
         while fast is not None and fast.next is not None:
             slow = slow.next
             fast = fast.next.next
-            if slow == fast:
+            if slow is fast:
                 return True
 
         return False

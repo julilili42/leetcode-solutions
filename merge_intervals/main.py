@@ -16,28 +16,29 @@ METHOD = "merge"
 
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        # two intervals [a,b] and [c,d] overlapp if b >= c
+        # if this is the case we merge to [a, max(b, d)]
+        # neeed to make sure a < c to compare them => sorting
+        # need to compare to predecessor intervall => stack
+
         intervals = sorted(intervals)
+
         stack = []
-        for i in range(len(intervals)):
-            curr = intervals[i]
+
+        for interval in intervals:
+            if not stack:
+                stack.append(interval)
+                continue
             
-            if stack:
-                prev = stack.pop()
-                start_prev, stop_prev = prev[0], prev[1]
-                start_curr, stop_curr = curr[0], curr[1]
-                
-                # interval is overlapping if stop of prev is larger then start of current
-                if stop_prev >= start_curr:
-                    # need to pay attention to cases like: [1,4] and [2,3]
-                    # need max end of interval
-                    end = max(stop_curr, stop_prev)
-                    stack.append([start_prev, end])
-                else:
-                    stack.append(prev)
-                    stack.append(curr)
+            a, b = stack[-1]
+            c, d = interval
+
+            if b >= c:
+                stack.pop()
+                stack.append([a, max(b, d)])
             else:
-                stack.append(curr)
-        
+                stack.append([c, d])
+
         return stack
 
 TESTS = [
