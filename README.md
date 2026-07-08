@@ -16,5 +16,5 @@ Collection of solved LeetCode problems in Python.
 
 **Problems without difficulty lookup:**
 
-- `subsetsII`
+- `subsets II`
 <!-- LEETCODE_STATS_END -->
