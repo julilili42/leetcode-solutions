@@ -34,6 +34,11 @@ class Solution:
             for i in range(index, len(candidates)):
                 if i > index and candidates[i] == candidates[i - 1]:
                     continue
+                # Optimization: since candidates is sorted all following candidates are larger
+                # then candidates[i] therefore we can return
+                if total + candidates[i] > target:
+                    return
+
                 subset.append(candidates[i])
                 dfs(i + 1, total + candidates[i])
                 subset.pop()
