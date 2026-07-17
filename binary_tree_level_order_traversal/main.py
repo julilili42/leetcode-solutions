@@ -11,38 +11,37 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "solve"
-
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+METHOD = "levelOrder"
 
 
 class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        dummy = ListNode()
-        dummy.next = head
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        if not root:
+            return []
 
-        slow = dummy
-        fast = dummy
+        res = []
+        queue = deque([root])
 
-        # move fast n elements
-        for _ in range(n + 1):
-            fast = fast.next
+        # python queue is default right to left
+        # > right most element ist the newest
+        # > append and popleft
 
-        # move both until fast reaches None
-        while fast:
-            slow = slow.next
-            fast = fast.next
+        # To make it left to right use appendleft and pop
 
-        # slow is on predessesor to node which should be deleted
-        # skip n-th element
-        slow.next = slow.next.next
+        while queue:
+            level = []
+            # queue holds at each iterration all the nodes of one level
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                level.append(node.val)
 
-        # return head of list
-        return dummy.next
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+
+            res.append(level)
+        return res
 
 
 TESTS = [

@@ -11,38 +11,15 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "solve"
-
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+METHOD = "maxDepth"
 
 
 class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        dummy = ListNode()
-        dummy.next = head
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
 
-        slow = dummy
-        fast = dummy
-
-        # move fast n elements
-        for _ in range(n + 1):
-            fast = fast.next
-
-        # move both until fast reaches None
-        while fast:
-            slow = slow.next
-            fast = fast.next
-
-        # slow is on predessesor to node which should be deleted
-        # skip n-th element
-        slow.next = slow.next.next
-
-        # return head of list
-        return dummy.next
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
 
 TESTS = [

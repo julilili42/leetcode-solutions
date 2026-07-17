@@ -11,38 +11,28 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "solve"
-
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+METHOD = "isSameTree"
 
 
 class Solution:
-    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
-        dummy = ListNode()
-        dummy.next = head
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+        # base cases
+        # if both nodes are none
+        if not p and not q:
+            return True
+        # if one node is none and the other not
+        if (not p and q) or (p and not q):
+            return False
+        # if values are not equal
+        if p.val != q.val:
+            return False
 
-        slow = dummy
-        fast = dummy
+        # get return values of subtrees
+        left = self.isSameTree(p.left, q.left)
+        right = self.isSameTree(p.right, q.right)
 
-        # move fast n elements
-        for _ in range(n + 1):
-            fast = fast.next
-
-        # move both until fast reaches None
-        while fast:
-            slow = slow.next
-            fast = fast.next
-
-        # slow is on predessesor to node which should be deleted
-        # skip n-th element
-        slow.next = slow.next.next
-
-        # return head of list
-        return dummy.next
+        # tree is the same if both subtrees are the same
+        return left and right
 
 
 TESTS = [
