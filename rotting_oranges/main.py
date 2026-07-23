@@ -16,30 +16,28 @@ METHOD = "orangesRotting"
 
 class Solution:
     def orangesRotting(self, grid: List[List[int]]) -> int:
-        q = deque([])
-        n = len(grid)
-        m = len(grid[0])
-        res = -1
-
+        m = len(grid)
+        n = len(grid[0])
+        res = 0
         fresh = 0
+        q = deque([])
 
-        for i in range(len(grid)):
-            for j in range(len(grid[i])):
-                if grid[i][j] == 2:
-                    q.append([i, j])
-                elif grid[i][j] == 1:
+        for row in range(m):
+            for col in range(n):
+                if grid[row][col] == 1:
                     fresh += 1
+                # must start BFS from each rotten node
+                # therefore first add all rotten nodes
+                if grid[row][col] == 2:
+                    q.append([row, col])
 
-        if fresh == 0:
-            return 0
-
-        while q:
-            res += 1
-
+        while q and fresh > 0:
+            # since we want level traverse we need the nodes in the q
+            # to be from the same level
             for _ in range(len(q)):
                 i, j = q.popleft()
 
-                if i + 1 < n and grid[i + 1][j] == 1:
+                if i + 1 < m and grid[i + 1][j] == 1:
                     q.append([i + 1, j])
                     grid[i + 1][j] = 2
                     fresh -= 1
@@ -47,7 +45,7 @@ class Solution:
                     q.append([i - 1, j])
                     grid[i - 1][j] = 2
                     fresh -= 1
-                if j + 1 < m and grid[i][j + 1] == 1:
+                if j + 1 < n and grid[i][j + 1] == 1:
                     q.append([i, j + 1])
                     grid[i][j + 1] = 2
                     fresh -= 1
@@ -56,7 +54,9 @@ class Solution:
                     grid[i][j - 1] = 2
                     fresh -= 1
 
-        return res if fresh == 0 else -1
+            res += 1
+
+        return -1 if fresh > 0 else res
 
 
 TESTS = [

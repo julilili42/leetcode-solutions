@@ -16,6 +16,36 @@ METHOD = "numIslands"
 
 class Solution:
     def numIslands(self, grid: List[List[str]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        res = 0
+
+        for row in range(m):
+            for col in range(n):
+                if grid[row][col] == "1":
+                    grid[row][col] = "0"
+                    q = deque([[row, col]])
+                    res += 1
+                    drs = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
+                    while q:
+                        i, j = q.popleft()
+
+                        for x, y in drs:
+                            nrow = i + x
+                            ncol = j + y
+
+                            if (
+                                0 <= nrow < m
+                                and 0 <= ncol < n
+                                and grid[nrow][ncol] == "1"
+                            ):
+                                q.append([nrow, ncol])
+                                grid[nrow][ncol] = "0"
+
+        return res
+
+    def numIslandsSeperateDirections(self, grid: List[List[str]]) -> int:
         res = 0
 
         m = len(grid)
