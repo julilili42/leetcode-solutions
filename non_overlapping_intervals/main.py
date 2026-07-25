@@ -16,6 +16,27 @@ METHOD = "eraseOverlapIntervalsClean"
 
 class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        intervals = sorted(intervals, key=lambda x: x[1])
+        stack = []
+        res = 0
+
+        for interval in intervals:
+            if not stack:
+                stack.append(interval)
+                continue
+
+            a, b = stack[-1]
+            c, d = interval
+
+            if b > c:
+                res += 1
+                continue
+            else:
+                stack.append(interval)
+
+        return res
+
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
         intervals = sorted(intervals)
 
         stack = []

@@ -18,36 +18,40 @@ class TimeMap:
     def __init__(self):
         self.store = {}
 
-    # O(1)
     def set(self, key: str, value: str, timestamp: int) -> None:
-        m = self.store.get(key, None)
-        if not m:
+        found = self.store.get(key, None)
+        if not found:
             self.store[key] = [(value, timestamp)]
         else:
-            m.append((value, timestamp))
+            self.store[key].append((value, timestamp))
 
-    # O(log(n))
     def get(self, key: str, timestamp: int) -> str:
-        data = self.store.get(key, None)
-        if not data:
+        nums = self.store.get(key, None)
+
+        if not nums:
             return ""
 
         l = 0
-        r = len(data) - 1
-        best = -1
+        r = len(nums) - 1
+        best = None
 
         while l <= r:
             m = l + (r - l) // 2
+            value = nums[m][0]
+            time = nums[m][1]
 
-            if data[m][1] == timestamp:
-                return data[m][0]
-            elif data[m][1] < timestamp:
+            if time == timestamp:
+                return value
+            elif time < timestamp:
                 best = m
                 l = m + 1
             else:
                 r = m - 1
 
-        return "" if best == -1 else data[best][0]
+        if best is None:
+            return ""
+
+        return nums[best][0]
 
 
 # we could also use only r since
