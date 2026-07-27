@@ -1,0 +1,99 @@
+from __future__ import annotations
+
+from typing import *
+from collections import defaultdict, Counter, deque
+from functools import lru_cache, cache
+from itertools import accumulate
+from bisect import bisect_left, bisect_right
+from heapq import heappush, heappop, heapify
+from math import inf, gcd
+import sys
+
+
+# Change this to the LeetCode method name
+METHOD = "maxAreaOfIsland"
+
+
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        m = len(grid)
+        n = len(grid[0])
+        res = 0
+
+        for r in range(m):
+            for c in range(n):
+                if grid[r][c] == 1:
+                    q = deque([[r, c]])
+                    grid[r][c] = 0
+
+                    area = 1
+
+                    while q:
+                        i, j = q.popleft()
+
+                        if i + 1 < m and grid[i + 1][j] == 1:
+                            q.append([i + 1, j])
+                            grid[i + 1][j] = 0
+                            area += 1
+
+                        if i - 1 >= 0 and grid[i - 1][j] == 1:
+                            q.append([i - 1, j])
+                            grid[i - 1][j] = 0
+                            area += 1
+
+                        if j + 1 < n and grid[i][j + 1] == 1:
+                            q.append([i, j + 1])
+                            grid[i][j + 1] = 0
+                            area += 1
+
+                        if j - 1 >= 0 and grid[i][j - 1] == 1:
+                            q.append([i, j - 1])
+                            grid[i][j - 1] = 0
+                            area += 1
+
+                    res = max(res, area)
+
+        return res
+
+
+TESTS = [
+    (
+        (
+            [
+                [0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+                [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+                [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0],
+            ],
+        ),
+        6,
+    ),
+    (([[0, 0, 0, 0, 0, 0, 0, 0]],), 0),
+]
+
+
+def run_tests():
+    solution = Solution()
+    fn = getattr(solution, METHOD)
+
+    if not TESTS:
+        print("No tests yet.")
+        return
+
+    for i, (args, expected) in enumerate(TESTS, 1):
+        got = fn(*args)
+
+        if got == expected:
+            print(f"Test {i}: OK")
+        else:
+            print(f"Test {i}: FAIL")
+            print(f"  got:      {got}")
+            print(f"  expected: {expected}")
+
+
+if __name__ == "__main__":
+    run_tests()
