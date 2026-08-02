@@ -11,36 +11,33 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "cloneGraph"
+METHOD = "rob"
 
 
 class Solution:
-    def cloneGraph(self, node: Optional["Node"]) -> Optional["Node"]:
-        if not node:
-            return None
+    def rob(self, nums: List[int]) -> int:
+        memo = {}
 
-        start = node
-        q = deque([node])
-        m = {node: Node(node.val)}
+        def dfs(i: int, prev_taken: bool):
+            if i == len(nums):
+                return 0
+            key = (i, prev_taken)
+            if key in memo:
+                return memo[key]
 
-        while q:
-            node = q.popleft()
+            skip = dfs(i + 1, False)
+            take = 0 if prev_taken else nums[i] + dfs(i + 1, True)
 
-            for neighbour in node.neighbors:
-                if neighbour not in m:
-                    q.append(neighbour)
-                    clone = Node(neighbour.val)
-                    m[neighbour] = clone
-                m[node].neighbors.append(m[neighbour])
+            memo[key] = max(skip, take)
 
-        return m[start]
+            return memo[key]
+
+        return dfs(0, False)
 
 
 TESTS = [
-    # Format:
-    # ((arg1, arg2, ...), expected),
-    # Example:
-    # (([2, 7, 11, 15], 9), [0, 1]),
+    (([1, 2, 3, 1],), 4),
+    (([2, 7, 9, 3, 1],), 12),
 ]
 
 

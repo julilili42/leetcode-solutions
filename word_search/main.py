@@ -22,33 +22,34 @@ class Solution:
         def dfs(i: int, j: int, k: int):
             if k == len(word):
                 return True
-
-            if i < 0 or i == m or j < 0 or j == n:
+            if i < 0 or j < 0 or i == m or j == n:
                 return False
-
+            if board[i][j] == "#":
+                return False
             if board[i][j] != word[k]:
                 return False
 
+            # we need to mark visited cells
+            # f.ex. "ABA" DFS could go from "A" to "B" and back to "A"
+            # therefore mark visited cell with # for each DFS
             temp = board[i][j]
-            board[i][j] = None
+            board[i][j] = "#"
 
-            up = dfs(i + 1, j, k + 1)
-            down = dfs(i - 1, j, k + 1)
-            right = dfs(i, j + 1, k + 1)
-            left = dfs(i, j - 1, k + 1)
+            found = (
+                dfs(i + 1, j, k + 1)
+                or dfs(i - 1, j, k + 1)
+                or dfs(i, j + 1, k + 1)
+                or dfs(i, j - 1, k + 1)
+            )
 
             board[i][j] = temp
 
-            if up or down or right or left:
-                return True
-
-            return False
+            return found
 
         for i in range(m):
             for j in range(n):
                 if dfs(i, j, 0):
                     return True
-
         return False
 
 

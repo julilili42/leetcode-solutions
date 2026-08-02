@@ -11,36 +11,27 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "cloneGraph"
+METHOD = "minOperations"
 
 
 class Solution:
-    def cloneGraph(self, node: Optional["Node"]) -> Optional["Node"]:
-        if not node:
-            return None
+    def minOperations(self, s: str) -> int:
+        j = 0
+        n = len(s)
+        changes = 0
 
-        start = node
-        q = deque([node])
-        m = {node: Node(node.val)}
+        for ch in s:
+            j ^= 1
+            if int(ch) == j:
+                changes += 1
 
-        while q:
-            node = q.popleft()
-
-            for neighbour in node.neighbors:
-                if neighbour not in m:
-                    q.append(neighbour)
-                    clone = Node(neighbour.val)
-                    m[neighbour] = clone
-                m[node].neighbors.append(m[neighbour])
-
-        return m[start]
+        return min(changes, n - changes)
 
 
 TESTS = [
-    # Format:
-    # ((arg1, arg2, ...), expected),
-    # Example:
-    # (([2, 7, 11, 15], 9), [0, 1]),
+    (("0100",), 1),
+    (("10",), 0),
+    (("1111",), 2),
 ]
 
 
