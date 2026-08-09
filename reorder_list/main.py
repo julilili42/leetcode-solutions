@@ -15,27 +15,45 @@ METHOD = "solve"
 
 
 class Solution:
-    def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        if not root:
-            return True
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        """
+        Do not return anything, modify head in-place instead.
+        """
+        if not head or not head.next:
+            return
 
-        res = True
+        slow = head
+        fast = head
+        # find middle
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
 
-        def dfs(node: Optional[TreeNode]):
-            if node is None:
-                return 0
+        # split list
+        second = slow.next
+        slow.next = None
 
-            l = 1 + dfs(node.left)
-            r = 1 + dfs(node.right)
+        # reverse secnond half
+        prev = None
+        while second:
+            nxt = second.next
+            second.next = prev
+            prev = second
+            second = nxt
 
-            nonlocal res
-            if abs(l - r) > 1:
-                res = False
+        second = prev
 
-            return max(l, r)
+        # merge
+        first = head
+        while second:
+            temp1 = first.next
+            temp2 = second.next
 
-        dfs(root)
-        return res
+            first.next = second
+            second.next = temp1
+
+            first = temp1
+            second = temp2
 
 
 TESTS = [

@@ -15,27 +15,14 @@ METHOD = "solve"
 
 
 class Solution:
-    def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        if not root:
-            return True
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = fast = head
 
-        res = True
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
 
-        def dfs(node: Optional[TreeNode]):
-            if node is None:
-                return 0
-
-            l = 1 + dfs(node.left)
-            r = 1 + dfs(node.right)
-
-            nonlocal res
-            if abs(l - r) > 1:
-                res = False
-
-            return max(l, r)
-
-        dfs(root)
-        return res
+        return slow
 
 
 TESTS = [

@@ -15,26 +15,25 @@ METHOD = "solve"
 
 
 class Solution:
-    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         if not root:
-            return True
+            return []
 
-        res = True
+        res = []
+        q = deque([root])
 
-        def dfs(node: Optional[TreeNode]):
-            if node is None:
-                return 0
+        while q:
+            right_most = None
+            for _ in range(len(q)):
+                node = q.popleft()
+                right_most = node.val
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
 
-            l = 1 + dfs(node.left)
-            r = 1 + dfs(node.right)
+            res.append(right_most)
 
-            nonlocal res
-            if abs(l - r) > 1:
-                res = False
-
-            return max(l, r)
-
-        dfs(root)
         return res
 
 

@@ -15,27 +15,33 @@ METHOD = "solve"
 
 
 class Solution:
-    def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        if not root:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        sp = tp = 0
+
+        while sp < len(s) and tp < len(t):
+            if s[sp] == t[tp]:
+                sp += 1
+            tp += 1
+
+        return sp == len(s)
+
+    def isSubsequenceFirstTry(self, s: str, t: str) -> bool:
+        p1 = 0
+        if not s:
+            return True
+        if not t:
+            return False
+        if len(s) > len(t):
+            return False
+
+        for i in range(len(t)):
+            if p1 < len(s) and t[i] == s[p1]:
+                p1 += 1
+
+        if p1 == len(s):
             return True
 
-        res = True
-
-        def dfs(node: Optional[TreeNode]):
-            if node is None:
-                return 0
-
-            l = 1 + dfs(node.left)
-            r = 1 + dfs(node.right)
-
-            nonlocal res
-            if abs(l - r) > 1:
-                res = False
-
-            return max(l, r)
-
-        dfs(root)
-        return res
+        return False
 
 
 TESTS = [

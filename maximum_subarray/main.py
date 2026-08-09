@@ -11,38 +11,42 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "solve"
+METHOD = "maxSubArray"
 
 
 class Solution:
-    def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        if not root:
-            return True
+    # Kadane's Algorithm
+    # O(n), O(1)
+    def maxSubArray(self, nums: List[int]) -> int:
+        res = float("-inf")
+        total = 0
+        for i in range(len(nums)):
+            if total < 0:
+                total = nums[i]
+            else:
+                total += nums[i]
+            res = max(res, total)
 
-        res = True
+        return res
 
-        def dfs(node: Optional[TreeNode]):
-            if node is None:
-                return 0
+    # O(n^2), O(1)
+    def maxSubArraySlow(self, nums: List[int]) -> int:
+        res = float("-inf")
 
-            l = 1 + dfs(node.left)
-            r = 1 + dfs(node.right)
+        # at each index start a new summation of the next subsequence (i to end)
+        for i in range(len(nums)):
+            total = 0
+            for j in range(i, len(nums)):
+                total += nums[j]
+                res = max(res, total)
 
-            nonlocal res
-            if abs(l - r) > 1:
-                res = False
-
-            return max(l, r)
-
-        dfs(root)
         return res
 
 
 TESTS = [
-    # Format:
-    # ((arg1, arg2, ...), expected),
-    # Example:
-    # (([2, 7, 11, 15], 9), [0, 1]),
+    (([-2, 1, -3, 4, -1, 2, 1, -5, 4],), 6),
+    (([5, 4, -1, 7, 8],), 23),
+    (([1],), 1),
 ]
 
 
