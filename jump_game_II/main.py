@@ -11,48 +11,35 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "canJumpGreedy"
+METHOD = "jump"
 
 
 class Solution:
-    def canJumpGreedy(self, nums: List[int]) -> bool:
-        farthest = 0
-        # for each index, check max. range which is reachable.
-        # If we are able to reach >= len(nums) - 1 then there exists a path to the last index.
-        for i in range(len(nums)):
-            # If farthest is smaller then the current index. Then the current index is not reachable.
-            # Therefore the last index is not reachable and we return False.
-            if farthest < i:
-                return False
-            farthest = max(farthest, i + nums[i])
-
-        return True
-
-    def canJump(self, nums: List[int]) -> bool:
+    def jump(self, nums: List[int]) -> int:
+        n = len(nums)
         mem = {}
 
         def dfs(i: int):
-            if i == len(nums) - 1:
-                return True
+            if i >= n - 1:
+                return 0
 
             if i in mem:
                 return mem[i]
 
+            min_jumps = float("inf")
             for j in range(1, nums[i] + 1):
-                if (i + j) < len(nums):
-                    if dfs(i + j):
-                        mem[i] = True
-                        return True
+                cur = 1 + dfs(i + j)
+                min_jumps = min(min_jumps, cur)
 
-            mem[i] = False
-            return False
+            mem[i] = min_jumps
+            return mem[i]
 
         return dfs(0)
 
 
 TESTS = [
-    (([2, 3, 1, 1, 4]), True),
-    (([3, 2, 1, 0, 4]), False),
+    (([2, 3, 1, 1, 4],), 2),
+    (([2, 3, 0, 1, 4],), 2),
 ]
 
 
