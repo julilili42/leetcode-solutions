@@ -5,13 +5,13 @@ Collection of solved LeetCode problems in Python.
 <!-- LEETCODE_STATS_START -->
 ![LeetCode Difficulty Distribution](assets/leetcode-difficulty.svg)
 
-**Total solved:** 75
+**Total solved:** 76
 
 | Difficulty | Count |
 |---|---:|
 | Easy | 25 |
 | Medium | 47 |
-| Hard | 0 |
+| Hard | 1 |
 
 
 **Problems without difficulty lookup:**
