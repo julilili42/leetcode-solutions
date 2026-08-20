@@ -5,7 +5,7 @@ Collection of solved LeetCode problems in Python.
 <!-- LEETCODE_STATS_START -->
 ![LeetCode Difficulty Distribution](assets/leetcode-difficulty.svg)
 
-**Total solved:** 76
+**Total solved:** 77
 
 | Difficulty | Count |
 |---|---:|
@@ -18,5 +18,6 @@ Collection of solved LeetCode problems in Python.
 
 - `combination_sum_2`
 - `nth_tribonacci_number`
+- `palindrom_paritioning`
 - `subsets_2`
 <!-- LEETCODE_STATS_END -->
