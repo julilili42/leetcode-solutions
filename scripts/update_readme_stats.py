@@ -34,12 +34,17 @@ COLORS = {
 }
 
 SLUG_ALIASES = {
+    "combination_sum_2": "combination-sum-ii",
+    "nth_tribonacci_number": "n-th-tribonacci-number",
+    "palindrom_paritioning": "palindrome-partitioning",
+    "subsets_2": "subsets-ii",
     "three_sum": "3sum",
     "three_sum_closest": "3sum-closest",
     "four_sum": "4sum",
     "two_sum_2_input_array_is_sorted": "two-sum-ii-input-array-is-sorted",
     "two_sum_ii_input_array_is_sorted": "two-sum-ii-input-array-is-sorted",
     "product_except_self": "product-of-array-except-self",
+    "valid_paranthesis_string": "valid-parenthesis-string",
 }
 
 

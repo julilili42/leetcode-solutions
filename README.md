@@ -9,6 +9,7 @@ Collection of solved LeetCode problems in Python.
 
 | Difficulty | Count |
 |---|---:|
+<<<<<<< HEAD
 | Easy | 30 |
 | Medium | 48 |
 | Hard | 1 |
@@ -21,4 +22,10 @@ Collection of solved LeetCode problems in Python.
 - `palindrom_paritioning`
 - `subsets_2`
 - `valid_paranthesis_string`
+=======
+| Easy | 31 |
+| Medium | 52 |
+| Hard | 1 |
+
+>>>>>>> 7f7cf79 (updated lookup skript)
 <!-- LEETCODE_STATS_END -->
