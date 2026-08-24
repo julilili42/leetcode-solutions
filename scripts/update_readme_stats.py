@@ -325,7 +325,7 @@ def update_readme(counts: dict[str, int], unknown: list[str]) -> None:
         unknown_text += "\n".join(f"- `{name}`" for name in unknown)
 
     block = f"""{start}
-![LeetCode Difficulty Distribution](assets/leetcode-difficulty.svg)
+![LeetCode Difficulty Distribution](assets/leetcode-difficulty.svg?v={counts["Easy"]}-{counts["Medium"]}-{counts["Hard"]}-{len(unknown)})
 
 **Total solved:** {total_solved}
 
