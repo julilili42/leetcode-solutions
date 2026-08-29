@@ -11,30 +11,61 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "setZeroes"
+METHOD = "setZeroesGood"
 
 
 class Solution:
-    def setZeroes(self, matrix: List[List[int]]) -> None:
+    # Time: O(m * n), Space: O(1)
+    def setZeroesGood(self, matrix: List[List[int]]) -> None:
         """
         Do not return anything, modify matrix in-place instead.
         """
+        m = len(matrix)
+        n = len(matrix[0])
+        first_col_zero = False
 
+        for i in range(m):
+            if matrix[i][0] == 0:
+                first_col_zero = True
+
+            for j in range(1, n):
+                if matrix[i][j] == 0:
+                    matrix[i][0] = 0
+                    matrix[0][j] = 0
+
+        for i in range(1, m):
+            for j in range(1, n):
+                if matrix[i][0] == 0 or matrix[0][j] == 0:
+                    matrix[i][j] = 0
+
+        if matrix[0][0] == 0:
+            for j in range(n):
+                matrix[0][j] = 0
+
+        if first_col_zero:
+            for i in range(m):
+                matrix[i][0] = 0
+
+    # Time: O(m * n), Space: O(m + n)
+    def setZeroesNotThatBad(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
         m = len(matrix)
         n = len(matrix[0])
 
-        zeroes_row = [False] * m
-        zeroes_col = [False] * n
+        rows = [False] * m
+        cols = [False] * n
 
         for i in range(m):
             for j in range(n):
                 if matrix[i][j] == 0:
-                    zeroes_row[i] = True
-                    zeroes_col[j] = True
+                    rows[i] = True
+                    cols[j] = True
 
         for i in range(m):
             for j in range(n):
-                if zeroes_row[i] or zeroes_col[j]:
+                if rows[i] or cols[j]:
                     matrix[i][j] = 0
 
     def setZeroesBad(self, matrix: List[List[int]]) -> None:
@@ -64,10 +95,11 @@ class Solution:
 
 
 TESTS = [
-    # Format:
-    # ((arg1, arg2, ...), expected),
-    # Example:
-    # (([2, 7, 11, 15], 9), [0, 1]),
+    (([[1, 1, 1], [1, 0, 1], [1, 1, 1]],), [[1, 0, 1], [0, 0, 0], [1, 0, 1]]),
+    (
+        ([[0, 1, 2, 0], [3, 4, 5, 2], [1, 3, 1, 5]],),
+        [[0, 0, 0, 0], [0, 4, 5, 0], [0, 3, 1, 0]],
+    ),
 ]
 
 
