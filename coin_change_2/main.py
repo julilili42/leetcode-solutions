@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from re import X
 from typing import *
 from collections import defaultdict, Counter, deque
 from functools import lru_cache, cache
@@ -12,36 +11,24 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "uniquePathsTopDown"
+METHOD = "changeTopDown"
 
 
 class Solution:
-    def uniquePathsBottomUp(self, m: int, n: int) -> int:
-        dp = {}
-        for i in range(m):
-            dp[(i, 0)] = 1
-        for j in range(n):
-            dp[(0, j)] = 1
-
-        for i in range(1, m):
-            for j in range(1, n):
-                dp[(i, j)] = dp[(i - 1, j)] + dp[(i, j - 1)]
-
-        return dp[(m - 1, n - 1)]
-
-    def uniquePathsTopDown(self, m: int, n: int) -> int:
+    def changeTopDown(self, amount: int, coins: List[int]) -> int:
         mem = {}
 
-        def dfs(i: int, j: int):
-            # if we are in the last row / col there is only one
-            # way to the goal.
-            if i == m - 1 or j == n - 1:
+        def dfs(i: int, total: int):
+            if total == amount:
                 return 1
-            key = (i, j)
+            if total > amount or i == len(coins):
+                return 0
+
+            key = (i, total)
             if key in mem:
                 return mem[key]
 
-            mem[key] = dfs(i + 1, j) + dfs(i, j + 1)
+            mem[key] = dfs(i + 1, total) + dfs(i, total + coins[i])
 
             return mem[key]
 
@@ -51,17 +38,24 @@ class Solution:
 TESTS = [
     (
         (
-            3,
-            7,
+            5,
+            [1, 2, 5],
         ),
-        28,
+        4,
     ),
     (
         (
             3,
-            2,
+            [2],
         ),
-        3,
+        0,
+    ),
+    (
+        (
+            10,
+            [10],
+        ),
+        1,
     ),
 ]
 

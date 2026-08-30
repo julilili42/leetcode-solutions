@@ -11,11 +11,36 @@ import sys
 
 
 # Change this to the LeetCode method name
-METHOD = "climbStairs"
+METHOD = "climbStairsTopDown1"
 
 
 class Solution:
-    def climbStairs(self, n: int) -> int:
+    def climbStairsBottomUp(self, n: int) -> int:
+        dp = {}
+        for i in range(n + 1):
+            if i == 0 or i == 1:
+                dp[i] = 1
+            else:
+                dp[i] = dp[i - 1] + dp[i - 2]
+
+        return dp[n]
+
+    def climbStairsTopDown2(self, n: int) -> int:
+        mem = {}
+
+        def dfs(i: int):
+            if i == 0 or i == 1:
+                return 1
+            if i in mem:
+                return mem[i]
+
+            mem[i] = dfs(i - 1) + dfs(i - 2)
+
+            return mem[i]
+
+        return dfs(n)
+
+    def climbStairsTopDown1(self, n: int) -> int:
         mem = {}
 
         def dfs(i: int):
