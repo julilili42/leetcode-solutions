@@ -15,8 +15,25 @@ METHOD = "subarraySum"
 
 
 class Solution:
-    # O(n^2) solution does not pass
     def subarraySum(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+
+        prefix_sums = {}
+        total = 0
+        res = 0
+        for n in nums:
+            total += n
+            if total == k:
+                res += 1
+            if total - k in prefix_sums:
+                res += prefix_sums[total - k]
+
+            prefix_sums[total] = 1 + prefix_sums.get(total, 0)
+
+        return res
+
+    # O(n^2) solution does not pass
+    def subarraySumSlow(self, nums: List[int], k: int) -> int:
         n = len(nums)
         res = 0
 
