@@ -3,14 +3,14 @@
 Collection of solved LeetCode problems in Python.
 
 <!-- LEETCODE_STATS_START -->
-![LeetCode Difficulty Distribution](assets/leetcode-difficulty.svg?v=35-65-1-1)
+![LeetCode Difficulty Distribution](assets/leetcode-difficulty.svg?v=35-67-1-1)
 
-**Total solved:** 102
+**Total solved:** 104
 
 | Difficulty | Count |
 |---|---:|
 | Easy | 35 |
-| Medium | 65 |
+| Medium | 67 |
 | Hard | 1 |
 
 
