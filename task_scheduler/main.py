@@ -18,29 +18,28 @@ class Solution:
     # task order execution is arbitrary
     # >= n intervals between two tasks with same label
     # find min. number of intervals to complete all tasks
-
     def leastInterval(self, tasks: list[str], n: int) -> int:
         counter = Counter(tasks)
         heap = []
         cooldown = deque()
-        timer = 0
+        i = 0
 
         for label, freq in counter.items():
             heappush(heap, -freq)
 
         while heap or cooldown:
             if heap:
-                task = -heappop(heap)
-                if task > 1:
-                    cooldown.append((task - 1, timer + n + 1))
-            timer += 1
+                freq = -heappop(heap)
+                if freq > 1:
+                    cooldown.append((freq - 1, n + i + 1))
 
-            while cooldown and cooldown[0][1] == timer:
-                task_count, next_iteration = cooldown[0]
-                cooldown.popleft()
-                heappush(heap, -task_count)
+            i += 1
 
-        return timer
+            while cooldown and cooldown[0][1] == i:
+                freq, _ = cooldown.popleft()
+                heappush(heap, -freq)
+
+        return i
 
 
 TESTS = [
