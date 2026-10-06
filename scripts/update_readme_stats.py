@@ -53,10 +53,12 @@ def normalize(text: str) -> str:
 
 
 def folder_to_slug(folder_name: str) -> str:
+    folder_name = folder_name.lower()
     if folder_name in SLUG_ALIASES:
         return SLUG_ALIASES[folder_name]
 
-    return folder_name.replace("_", "-")
+    slug = folder_name.replace("_", "-")
+    return re.sub(r"-2$", "-ii", slug)
 
 
 def leetcode_graphql(query: str, variables: dict) -> dict | None:
@@ -104,7 +106,7 @@ def fetch_question_by_slug(slug: str) -> dict | None:
 
 
 def search_question(folder_name: str) -> dict | None:
-    search_text = folder_name.replace("_", " ")
+    search_text = folder_to_slug(folder_name).replace("-", " ")
 
     query = """
     query problemsetQuestionList(
