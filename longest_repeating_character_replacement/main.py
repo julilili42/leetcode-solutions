@@ -15,38 +15,72 @@ METHOD = "characterReplacement"
 
 
 class Solution:
+    def characterReplacementArray(self, s: str, k: int) -> int:
+        freq = [0] * 26
+        max_freq = 0
+        l = 0
+        n = len(s)
+        res = -1
+
+        for r in range(n):
+            idx = ord(s[r]) - ord("A")
+            freq[idx] += 1
+            max_freq = max(max_freq, freq[idx])
+
+            if (r - l + 1) - max_freq > k:
+                idx = ord(s[l]) - ord("A")
+                freq[idx] -= 1
+                l += 1
+
+            res = max(res, r - l + 1)
+
+        return res
+
     def characterReplacement(self, s: str, k: int) -> int:
         l = 0
         freq = defaultdict(int)
         max_length = 1
         # max_freq is not always the exact max_frequency in the current window.
-        # it is the highest freq we have seen while expanding the window. 
-        # that is sufficient since we only care about the max_length, 
-        # not if the current window is valid. 
+        # it is the highest freq we have seen while expanding the window.
+        # that is sufficient since we only care about the max_length,
+        # not if the current window is valid.
         # alternatively: use max_freq = max(freq.values())
         max_freq = 0
 
         for r in range(len(s)):
             freq[s[r]] += 1
             # to minimize the changes in the window, we need to identify the
-            # character with the highest frequency. 
+            # character with the highest frequency.
             max_freq = max(freq[s[r]], max_freq)
 
-            # the minimum number of changes is then given by 
-            # current_length - max_frequency 
+            # the minimum number of changes is then given by
+            # current_length - max_frequency
             while (r - l + 1) - max_freq > k:
-                # if we have more then k needed changes, the window is invalid. 
+                # if we have more then k needed changes, the window is invalid.
                 # therefore we need to shrink the window from the left
                 freq[s[l]] -= 1
                 l += 1
-        
+
             max_length = max(max_length, r - l + 1)
 
         return max_length
 
+
 TESTS = [
-    (("ABAB",2,), 4),
-    (("AABABBA",1,), 4),
+    (
+        (
+            "ABAB",
+            2,
+        ),
+        4,
+    ),
+    (
+        (
+            "AABABBA",
+            1,
+        ),
+        4,
+    ),
 ]
 
 

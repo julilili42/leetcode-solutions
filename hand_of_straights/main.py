@@ -16,17 +16,22 @@ METHOD = "isNStraightHand"
 
 class Solution:
     def isNStraightHand(self, hand: list[int], groupSize: int) -> bool:
-        if len(hand) % groupSize != 0:
+        n = len(hand)
+        if n % groupSize != 0:
             return False
 
         count = Counter(hand)
-
         for start in sorted(count):
+            # number of sequences which start at card start.
             freq = count[start]
 
             if freq == 0:
                 continue
-
+            # since we start at `start` there have to be cards
+            # `start`...`start + groupSize` s.t. we can have a group of
+            # size groupSize. If any of those cards have a freq which is
+            # smaller then the start freq, then we are not able to cover the
+            # set of cards by groups of size groupSize.
             for num in range(start, start + groupSize):
                 if count[num] < freq:
                     return False
