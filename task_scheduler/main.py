@@ -34,7 +34,7 @@ class Solution:
                     cooldown.append((freq - 1, n + i + 1))
 
             i += 1
-
+            # this can also be if, since in each iteration we can only have a single item from the queue with q[0][1] == i.
             while cooldown and cooldown[0][1] == i:
                 freq, _ = cooldown.popleft()
                 heappush(heap, -freq)
